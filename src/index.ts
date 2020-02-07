@@ -1,26 +1,22 @@
-import Server from './server/app';
-import { logger } from './config/logger';
-import { receptacle } from './container';
-import { Container } from 'inversify';
 import 'reflect-metadata';
 
-// Start the server
-const port = Number(process.env.PORT || 3000);
+import { Application } from 'express';
+import { Container } from 'inversify';
 
-const container: Container = receptacle.getContainer;
+import { config } from './config/config';
+import { SERVER } from './const/types';
+import { receptacle } from './container';
+import { ServerInterface } from './server/app.interface';
 
-let server = new Server();
+async function startServer() {
+    const container: Container = receptacle.getContainer;
+    const server: ServerInterface = container.get(SERVER);
+    const app: Application = await server.server();
+    const isDevelopment: boolean =
+        config.NODE_ENV === 'staging' || config.NODE_ENV === 'development';
+    app.listen(config.PORT, () =>
+        console.log(`Listening on port ${config.PORT}!`)
+    );
+}
 
-server.app.listen(port, () => {
-    logger.info('Express server started on port: ' + port);
-});
-
-process.on("uncaughtException", e => {
-    console.log(e);
-    process.exit(1);
-});
-
-process.on("unhandledRejection", e => {
-    console.log(e);
-    process.exit(1);
-});
+export default startServer;

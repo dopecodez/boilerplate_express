@@ -1,23 +1,21 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "baseUrl": "./",
+    "rootDir": ".",
+    "outDir": "build",
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "module": "commonjs",
-    "outDir": "dist",
-    "removeComments": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "es6",
+    "resolveJsonModule": true,
     "moduleResolution": "node",
-    "lib": [
-      "es6"
-    ],
+    "sourceMap": true
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts"
+    "test/**/*.ts",
+    "test/unit/utility/asyncLoader.test.ts"
+  ],
+  "lib": [
+    "es2017",
+    "dom"
   ]
 }

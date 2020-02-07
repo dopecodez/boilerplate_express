@@ -1,14 +1,8 @@
 {
-  "extends": "tslint:recommended",
-  "rules": {
-    "member-ordering": false,
-    "object-literal-sort-keys": false,
-    "ordered-imports": false,
-    "quotemark": [true, "single"]
-  },
+  "extends": "gts/tslint.json",
   "linterOptions": {
     "exclude": [
-      "./node_modules/**"
+      "**/*.json"
     ]
   }
 }

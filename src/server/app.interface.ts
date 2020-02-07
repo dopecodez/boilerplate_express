@@ -1,5 +1,5 @@
-import {Application} from 'express';
+import { Application } from 'express';
 
-export interface ServerInterface{
-    app: Application
+export interface ServerInterface {
+server(): Promise<Application>;
 }

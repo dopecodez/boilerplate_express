@@ -1,18 +1,19 @@
-import cookieParser from 'cookie-parser';
-import express from 'express';
-import logger from 'morgan';
-import cors from 'cors';
+import * as express from 'express';
+import { Container, inject } from 'inversify';
+import { provide } from 'inversify-binding-decorators';
+import * as cookieParser from 'cookie-parser';
+import * as logger from 'morgan';
+import * as cors from 'cors';
 import BaseRouter from '../modules/baseRouter'
-import { ServerInterface } from './app.interface';
+
+import { SERVER } from '../const/types';
+import { receptacle } from '../container';
 const swaggerJSDoc = require('swagger-jsdoc');
 import swaggerUiExpress = require('swagger-ui-express');
+import { ServerInterface } from './app.interface';
 
-export default class Server implements ServerInterface {
-  app: express.Application;
-  constructor() {
-    this.app = express();
-    this.setup();
-  }
+@provide(SERVER)
+class Server implements ServerInterface {
   private swaggerDefinition = {
     info: {
       title: `REST API for App`,
@@ -27,18 +28,17 @@ export default class Server implements ServerInterface {
     swaggerDefinition: this.swaggerDefinition,
     apis: ['./src/modules/**/docs/*.yaml'],
   };
-
-  public setup(): void {
+  async server(): Promise<any> {
+    const container: Container = receptacle.getContainer;
+    const app = express();
     const swaggerSpec = swaggerJSDoc(this.options);
-    this.app.use(logger('dev'));
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cookieParser());
-    this.app.use('/api/v1', BaseRouter);
-    this.app.use(cors());
-    this.app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpec));
+    app.use(logger('dev'));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(cookieParser());
+    app.use('/api/v1', BaseRouter);
+    app.use(cors());
+    app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpec));
+    return app;
   }
 }
-
-
-

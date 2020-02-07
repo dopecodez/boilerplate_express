@@ -1,4 +1,4 @@
-import request from 'request';
+import * as request from 'request';
 
 import { IProxy, Imethod, IreqObj } from './proxy.interface';
 
