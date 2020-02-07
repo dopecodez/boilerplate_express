@@ -12,11 +12,19 @@ async function startServer() {
     const container: Container = receptacle.getContainer;
     const server: ServerInterface = container.get(SERVER);
     const app: Application = await server.server();
-    const isDevelopment: boolean =
-        config.NODE_ENV === 'staging' || config.NODE_ENV === 'development';
-    app.listen(config.PORT, () =>
+    app.listen('3000', () =>
         console.log(`Listening on port ${config.PORT}!`)
     );
 }
 
-export default startServer;
+startServer();
+
+process.on("uncaughtException", e => {
+    console.log(e);
+    process.exit(1);
+});
+
+process.on("unhandledRejection", e => {
+    console.log(e);
+    process.exit(1);
+});

@@ -4,13 +4,13 @@ import { provide } from 'inversify-binding-decorators';
 import * as cookieParser from 'cookie-parser';
 import * as logger from 'morgan';
 import * as cors from 'cors';
-import BaseRouter from '../modules/baseRouter'
 
-import { SERVER } from '../const/types';
+import { SERVER, BASEROUTE } from '../const/types';
 import { receptacle } from '../container';
 const swaggerJSDoc = require('swagger-jsdoc');
 import swaggerUiExpress = require('swagger-ui-express');
 import { ServerInterface } from './app.interface';
+import { IRouter } from '../modules/IRouter';
 
 @provide(SERVER)
 class Server implements ServerInterface {
@@ -36,7 +36,8 @@ class Server implements ServerInterface {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use('/api/v1', BaseRouter);
+    const baseRouter : IRouter = container.get(BASEROUTE)
+    app.use('/api/v1', baseRouter.routes);
     app.use(cors());
     app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpec));
     return app;
