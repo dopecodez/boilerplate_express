@@ -1,6 +1,5 @@
-import { receptacle } from '../container';
 import { Router } from 'express';
-import { Container } from 'inversify';
+import { inject } from 'inversify';
 import { USERROUTE, BASEROUTE } from '../const/types';
 import { IRouter } from './IRouter';
 import { provide } from 'inversify-binding-decorators';
@@ -10,11 +9,11 @@ const router = Router();
 
 // Add sub-route
 @provide(BASEROUTE)
-export default class BaseRouter implements IRouter{
+class BaseRouter implements IRouter{
+    @inject(USERROUTE) userRouter!: IRouter;
+    
     get routes(){
-        const container: Container = receptacle.getContainer;
-        const userRouter: IRouter = container.get(USERROUTE); 
-        router.use('/users', userRouter.routes);
+        router.use('/users', this.userRouter.routes);
         return router;
     }
 }

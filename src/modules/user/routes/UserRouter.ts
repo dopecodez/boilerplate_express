@@ -1,17 +1,22 @@
 import { Request, Response, Router, Express } from 'express';
 import { IRouter } from '../../IRouter';
 import { provide } from 'inversify-binding-decorators';
-import { USERROUTE } from '../../../const/types';
+import { USERROUTE, USER_SERVICE } from '../../../const/types';
+import { inject } from 'inversify';
+import { IUserService } from '../IUserService';
 
 const router = Router();
 
 @provide(USERROUTE)
-export class UserRouter implements IRouter{
+class UserRouter implements IRouter{
+    @inject(USER_SERVICE) private userService! : IUserService
+    
     get routes(){
         router.get('/', async (req: Request, res: Response) => {
             try {
                 console.log('this hits and returns')
-                return res.send('come on bru');
+                let quote = await this.userService.getRandomTest();
+                return res.send(quote);
             } catch (err) {
                 throw err;
             }

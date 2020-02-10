@@ -1,6 +1,6 @@
 import * as request from 'request';
 
-import { IProxy, Imethod, IreqObj } from './proxy.interface';
+import { IProxy, IreqObj } from './proxy.interface';
 
 import { IApiError } from './apiError.interface';
 import { PROXY } from '../const/types';
@@ -9,12 +9,10 @@ import { provide } from 'inversify-binding-decorators';
 @provide(PROXY)
 class Proxy implements IProxy {
     execute(
-        headers: request.Headers,
-        uri: string,
-        method: Imethod,
-        gzip = false,
+        options: IreqObj,
         ...reqBody: any[]
     ): Promise<any> {
+        let [headers, uri, method , gzip] = [options.headers, options.uri, options.method, options.gzip || false]
         const reqObj: IreqObj = { headers, uri, method };
         if (gzip) {
             reqObj.gzip = true;

@@ -13,9 +13,7 @@ export interface IreqObj {
 
 export interface IProxy {
     execute(
-        headers: request.Headers,
-        uri: string,
-        method: Imethod,
+        options: IreqObj,
         ...reqBody: any[]
     ): Promise<request.Response>;
 }
