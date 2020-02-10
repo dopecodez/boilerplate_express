@@ -36,7 +36,7 @@ class Server implements ServerInterface {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use('/api/v1', this.baseRouter.routes);
+    app.use('/api/v1', this.baseRouter.routes);//setting up base route
     app.use(cors());
     app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpec));
     return app;

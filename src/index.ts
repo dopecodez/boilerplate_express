@@ -1,4 +1,4 @@
-import './LoadEnv';
+import './LoadEnv';//should be the first import, to load environment before everything else
 import 'reflect-metadata';
 
 import { Application } from 'express';
@@ -12,7 +12,7 @@ async function startServer() {
     const container: Container = receptacle.getContainer;
     const server: ServerInterface = container.get(SERVER);
     const app: Application = await server.server();
-    app.listen('3000', () =>
+    app.listen(process.env.PORT, () =>
         console.log(`Listening on port ${process.env.PORT} in ${process.env.NODE_ENV} mode`)
     );
 }

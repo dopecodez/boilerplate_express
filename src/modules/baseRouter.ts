@@ -4,10 +4,10 @@ import { USERROUTE, BASEROUTE } from '../const/types';
 import { IRouter } from './router.interface';
 import { provide } from 'inversify-binding-decorators';
 
-// Init router and path
+// Init router
 const router = Router();
 
-// Add sub-route
+//Inject all new routes here and use them
 @provide(BASEROUTE)
 class BaseRouter implements IRouter{
     @inject(USERROUTE) userRouter!: IRouter;
