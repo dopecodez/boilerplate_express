@@ -1,5 +1,5 @@
 import '../utility/proxy';
 import '../server/app';
-import '../modules/BaseRouter';
-import '../modules/user/routes/UserRouter';
-import '../modules/user/UserService'
+import '../modules/baseRouter';
+import '../modules/user/routes/userRouter';
+import '../modules/user/services/userService'

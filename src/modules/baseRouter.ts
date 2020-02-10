@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { inject } from 'inversify';
 import { USERROUTE, BASEROUTE } from '../const/types';
-import { IRouter } from './IRouter';
+import { IRouter } from './router.interface';
 import { provide } from 'inversify-binding-decorators';
 
 // Init router and path
@@ -11,7 +11,7 @@ const router = Router();
 @provide(BASEROUTE)
 class BaseRouter implements IRouter{
     @inject(USERROUTE) userRouter!: IRouter;
-    
+
     get routes(){
         router.use('/users', this.userRouter.routes);
         return router;

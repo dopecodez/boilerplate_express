@@ -1,8 +1,8 @@
 import { inject } from "inversify";
-import { PROXY, USER_SERVICE } from '../../const/types';
-import { IProxy, IreqObj } from "../../utility/proxy.interface";
+import { PROXY, USER_SERVICE } from '../../../const/types';
+import { IProxy, IreqObj } from "../../../utility/proxy.interface";
 import { provide } from "inversify-binding-decorators";
-import { IUserService } from "./IUserService";
+import { IUserService } from "./userService.interface";
 
 @provide(USER_SERVICE)
 class UserService implements IUserService{

@@ -9,7 +9,7 @@ import { SERVER, BASEROUTE } from '../const/types';
 const swaggerJSDoc = require('swagger-jsdoc');
 import swaggerUiExpress = require('swagger-ui-express');
 import { ServerInterface } from './app.interface';
-import { IRouter } from '../modules/IRouter';
+import { IRouter } from '../modules/router.interface';
 
 @provide(SERVER)
 class Server implements ServerInterface {
