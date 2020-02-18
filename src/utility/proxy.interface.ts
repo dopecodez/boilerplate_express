@@ -1,12 +1,11 @@
-import * as request from 'request';
-
+import {IncomingHttpHeaders} from 'http';
 export type Imethod = 'POST' | 'PUT' | 'GET' | 'PATCH';
 
 export interface IreqObj {
-    headers: request.Headers;
+    headers: IncomingHttpHeaders;
     uri: string;
     method: Imethod;
-    json?: boolean;
+    json?: Object;
     body?: any;
     gzip?: boolean;
 }
@@ -15,5 +14,5 @@ export interface IProxy {
     execute(
         options: IreqObj,
         ...reqBody: any[]
-    ): Promise<request.Response>;
+    ): Promise<any>;
 }

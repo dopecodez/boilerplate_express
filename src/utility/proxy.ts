@@ -1,5 +1,4 @@
-import * as request from 'request';
-
+import got from 'got';
 import { IProxy, IreqObj } from './proxy.interface';
 
 import { IApiError } from './apiError.interface';
@@ -8,7 +7,7 @@ import { provide } from 'inversify-binding-decorators';
 
 @provide(PROXY)
 class Proxy implements IProxy {
-    execute(
+    async execute(
         options: IreqObj,
         ...reqBody: any[]
     ): Promise<any> {
@@ -19,47 +18,33 @@ class Proxy implements IProxy {
         }
         if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
             if (reqBody[1]) {
-                reqObj.json = false;
+                reqObj.json = reqBody[0];
             } else {
-                reqObj.json = true;
+                reqObj.json = {};
             }
-            reqObj.body = reqBody[0];
         }
-        return new Promise((resolve, reject) => {
-            request(reqObj, (err: any, res: request.Response, body: any) => {
-                if (err) {
-                    const error: IApiError = {
-                        error: {
-                            statusCode: res.statusCode || 500,
-                            code: res.statusCode || 500,
-                            message: 'error in response',
-                            developerMessage: res.statusMessage,
-                        },
-                    };
-                    reject(error);
-                }
-                let parsedBody;
-                try {
-                    parsedBody = JSON.parse(body);
-                } catch (e) {
-                    parsedBody = body;
-                }
-                if (parsedBody.error) {
-                    reject(parsedBody);
-                } else {
-                    if (res.statusCode.toString()[0] != '2') {
-                        const error = {
-                            error: {
-                                statusCode: res.statusCode || 500,
-                                response: parsedBody
-                            },
-                        };
-                        reject(error);
-                    } else {
-                        resolve(parsedBody);
-                    }
-                }
-            });
-        });
+        try{
+            let response = await got(reqObj.uri, reqObj);
+            let parsedBody = JSON.parse(response.body);
+            if (response.statusCode.toString()[0] != '2') {
+                const error = {
+                    error: {
+                        statusCode: response.statusCode,
+                        response: parsedBody
+                    },
+                };
+                throw(error);
+            }else{
+                return parsedBody;
+            }
+        }catch(err){
+            const error: IApiError = {
+                statusCode: err.statusCode || 500,
+                code: err.statusCode || 500,
+                message: 'error in response',
+                developerMessage: err.statusMessage,
+            };
+            throw (error);
+        }
     }
 }
