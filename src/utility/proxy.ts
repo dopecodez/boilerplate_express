@@ -11,7 +11,7 @@ class Proxy implements IProxy {
         options: IreqObj,
         ...reqBody: any[]
     ): Promise<any> {
-        let [headers, uri, method , gzip] = [options.headers, options.uri, options.method, options.gzip || false]
+        const [headers, uri, method , gzip] = [options.headers, options.uri, options.method, options.gzip || false]
         const reqObj: IreqObj = { headers, uri, method };
         if (gzip) {
             reqObj.gzip = true;
@@ -24,9 +24,9 @@ class Proxy implements IProxy {
             }
         }
         try{
-            let response = await got(reqObj.uri, reqObj);
-            let parsedBody = JSON.parse(response.body);
-            if (response.statusCode.toString()[0] != '2') {
+            const response = await got(reqObj.uri, reqObj);
+            const parsedBody = JSON.parse(response.body);
+            if (response.statusCode.toString()[0] !== '2') {
                 const error = {
                     error: {
                         statusCode: response.statusCode,

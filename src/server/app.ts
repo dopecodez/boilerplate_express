@@ -1,19 +1,22 @@
 import * as express from 'express';
-import { Container, inject } from 'inversify';
+import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 import * as cookieParser from 'cookie-parser';
-import * as logger from 'morgan';
 import * as cors from 'cors';
-
 import { SERVER, BASEROUTE } from '../const/types';
 const swaggerJSDoc = require('swagger-jsdoc');
 import swaggerUiExpress = require('swagger-ui-express');
 import { ServerInterface } from './app.interface';
 import { IRouter } from '../modules/router.interface';
+import { connectToDatabase } from '../config/db';
 
 @provide(SERVER)
 class Server implements ServerInterface {
   @inject(BASEROUTE) private baseRouter!: IRouter
+
+  constructor(){
+    connectToDatabase()
+  }
 
   private swaggerDefinition = {
     info: {
@@ -32,7 +35,6 @@ class Server implements ServerInterface {
   async server(): Promise<express.Application> {
     const app = express();
     const swaggerSpec = swaggerJSDoc(this.options);
-    app.use(logger('dev'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());

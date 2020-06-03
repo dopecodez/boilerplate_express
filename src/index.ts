@@ -1,4 +1,8 @@
-import './LoadEnv';//should be the first import, to load environment before everything else
+import { Environment } from './config/environment';
+/**
+ * Setuping environment variables
+ */
+Environment.setup();
 import 'reflect-metadata';
 
 import { Application } from 'express';

@@ -4,5 +4,11 @@
     "exclude": [
       "**/*.json"
     ]
+  },
+  "rules": {
+    "interface-name": false,
+    "ban-types": false,
+    "no-any": false,
+    "prefer-const": false
   }
 }

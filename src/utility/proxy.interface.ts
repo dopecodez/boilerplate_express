@@ -1,8 +1,8 @@
-import * as request from 'request'; 
+import { Headers } from 'got';
 export type Imethod = 'POST' | 'PUT' | 'GET' | 'PATCH';
 
 export interface IreqObj {
-    headers: request.Headers;
+    headers: Headers;
     uri: string;
     method: Imethod;
     json?: Object;

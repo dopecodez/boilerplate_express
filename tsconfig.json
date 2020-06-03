@@ -11,8 +11,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts",
-    "test/unit/utility/asyncLoader.test.ts"
+    "test/**/*.ts"
   ],
   "lib": [
     "es2017",
