@@ -1,9 +1,9 @@
 {
-  "name": "shopping-app",
+  "name": "test-app",
   "version": "0.0.0",
   "scripts": {
     "build": "node ./util/build.js",
-    "lint": "tslint --project \"tsconfig.json\"",
+    "lint": "eslint --project \"tsconfig.json\"",
     "start": "npm run clean && npm run compile && npm run dev",
     "compile": "tsc -p .",
     "dev": "node ./build/src/index.js",
