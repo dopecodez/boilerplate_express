@@ -22,7 +22,7 @@ interface ConfigInterface {
 }
 
 export const config: ConfigInterface = {
-    SERVER_PORT: process.env.SERVER_PORT || '',
+    SERVER_PORT: process.env.PORT || '',
     NODE_ENV: process.env.NODE_ENV || '',
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',

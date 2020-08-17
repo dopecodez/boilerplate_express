@@ -3,17 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "build": "node ./util/build.js",
-    "lint": "eslint --project \"tsconfig.json\"",
-    "start": "npm run clean && npm run compile && npm run dev",
-    "compile": "tsc -p .",
-    "dev": "node ./build/src/index.js",
+    "lint": "eslint src/**/*.ts",
+    "prestart": "npm run build",
+    "start": "npm run compile && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "check": "gts check",
-    "clean": "gts clean",
-    "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "dev": "node ./dist/index.js",
+    "compile": "tsc -p ."
   },
   "dependencies": {
     "@types/swagger-ui-express": "^4.1.1",
@@ -21,8 +16,6 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "google-auth-library": "^6.0.0",
-    "got": "^10.5.7",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
     "jsonwebtoken": "^8.5.1",

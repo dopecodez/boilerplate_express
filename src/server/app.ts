@@ -1,8 +1,8 @@
-import * as express from 'express';
+import express from 'express';
 import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { SERVER, BASEROUTE } from '../const/types';
 const swaggerJSDoc = require('swagger-jsdoc');
 import swaggerUiExpress = require('swagger-ui-express');
